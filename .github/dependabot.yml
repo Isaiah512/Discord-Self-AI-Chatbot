@@ -4,7 +4,7 @@ updates:
     directory: "/" 
     schedule:
       interval: "daily"  
-    open-pull-requests-limit: 5  
+    open-pull-requests-limit: 5 
     assignees:
       - isaiah76
     labels:
@@ -12,14 +12,10 @@ updates:
     groups:
       python-dependencies:
         patterns:
+          - "discord.py"
           - "python-dotenv"
+          - "langchain"
           - "langchain-google-genai"
-          - "langchain-core"
-          - "PyPDF2"
-          - "python-pptx"
-          - "pyfiglet"
-          - "pytesseract"
-          - "pdf2image"
-          - "pillow"
           - "google-generativeai"
-    ignore:
+          - "Pillow"
+          - "aiohttp"
