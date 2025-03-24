@@ -25,7 +25,7 @@ def hello_world():
 {OWNER_RECOGNITION}
 """
 
-# AI Model settings
+# Gemini Model settings
 GEMINI_MODEL_TEXT = "gemini-2.0-flash"
 GEMINI_MODEL_VISION = "gemini-2.0-flash"
 GEMINI_TEMPERATURE = 0.5
@@ -38,6 +38,11 @@ GEMINI_SAFETY_SETTINGS = {
     HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
     HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
 }
+
+# Image Generation settings
+IMAGE_GENERATION_MODEL = "stabilityai/stable-diffusion-2"
+IMAGE_GENERATION_GUIDANCE_SCALE = 7.5  
+IMAGE_GENERATION_NUM_INFERENCE_STEPS = 70  
 
 # Discord bot settings
 MAX_MESSAGE_LENGTH = 2000

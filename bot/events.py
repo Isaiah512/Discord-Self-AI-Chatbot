@@ -2,7 +2,12 @@
 Discord event handlers
 """
 from bot.memory import store_channel_message, store_user_info
-from bot.commands import handle_help_command, handle_text_command, handle_image_command
+from bot.commands import (
+    handle_help_command, 
+    handle_text_command, 
+    handle_image_command,
+    handle_image_generation_command
+)
 from utils.helpers import extract_user_info
 
 async def on_ready(client):
@@ -31,6 +36,9 @@ async def on_message(client, message):
         
         if content.lower() == 'help':
             await handle_help_command(message)
+        elif content.lower().startswith(('imagine ')):
+            gen_prompt = content.split(' ', 1)[1] if len(content.split()) > 1 else ''
+            await handle_image_generation_command(message, gen_prompt)
         elif message.attachments:
             await handle_image_command(message, content)
         else:

@@ -3,20 +3,23 @@ Bot commands
 """
 from bot.memory import get_user_memory, get_channel_context
 from bot.ai_service import process_text_query, process_image_query
+from bot.image_service import generate_image
 from utils.helpers import send_chunked_message, extract_user_info
+import discord
 
 async def handle_help_command(message):
     """Display help message."""
     help_text = (
         "**How to use me**\n"
-        "Mention me with a text for conversation, or attach an image (with an optional caption).\n"
-        "\nCommands:\n"
-        "`help` - Show this help message"
+        "`help` - Show this help message\n"
+        "`your text` - Chat with the bot\n"
+        "`prompt + image attachment` - Analyze an image\n"
+        "`imagine` - Generate an image\n"
     )
     await message.channel.send(help_text)
 
 async def handle_text_command(message, query):
-    """Handle text-based queries."""
+    """Handle text messages."""
     if not query:
         await message.channel.send("Please provide a message after mentioning me.")
         return
@@ -41,7 +44,7 @@ async def handle_text_command(message, query):
         print(f"Error in text processing: {e}")
 
 async def handle_image_command(message, prompt):
-    """Handle image-based queries."""
+    """Handle computer vision."""
     attachments = message.attachments
     
     try:
@@ -63,3 +66,26 @@ async def handle_image_command(message, prompt):
     except Exception as e:
         await message.channel.send(f"An error occurred: {str(e)}")
         print(f"Error in image processing: {e}")
+
+async def handle_image_generation_command(message, prompt):
+    """Handle image generation."""
+    if not prompt:
+        await message.channel.send("Please provide a prompt for image generation.")
+        return
+    
+    try:
+        processing_msg = await message.channel.send("Generating image, please wait...")
+        image_path = await generate_image(prompt)
+
+        await processing_msg.delete()
+        if not image_path.endswith('.png'):
+            await message.channel.send(image_path)
+            return
+        
+        with open(image_path, 'rb') as image_file:
+            picture = discord.File(image_file, filename='generated_image.png')
+            await message.channel.send(f"Generated image for prompt: *{prompt}*", file=picture)
+        
+    except Exception as e:
+        await message.channel.send(f"An error occurred during image generation: {str(e)}")
+        print(f"Image generation error: {e}")

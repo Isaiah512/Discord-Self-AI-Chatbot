@@ -8,6 +8,7 @@ Transform your Discord account into an AI chatbot using the Google Gemini AI mod
 
 - **Text Conversations** - Natural responses to messages using Gemini AI
 - **Computer Vision** - Analysis of one or multiple images in a message
+- **Image Generation** - Generate images based on text prompt
 - **Conversation Memory** - Retains context from previous interactions
 - **Context Awareness** - Understands the environment and conversation flow
 - **Customizable Personality** - Configure how your bot responds and behaves
@@ -26,6 +27,10 @@ Here are some images showcasing the functionalities of the bot:
 
     ![image2](readme_img/image2.png)
 
+3. **Image Generation**
+
+    ![image6](readme_img/image6.png)
+
 3. **Owner and User Recognition**
 
     ![image3](readme_img/image3.png)
@@ -43,13 +48,14 @@ Here are some images showcasing the functionalities of the bot:
 ```
 ├── bot/                 # Core bot functionality
 │   ├── ai_service.py    # Gemini AI integration
+│   ├── image_service.py # Image Generation integration
 │   ├── client.py        # Discord client implementation
 │   ├── commands.py      # Command handling
 │   ├── events.py        # Event handling
 │   ├── memory.py        # Conversation memory management
 │   └── __init__.py      # Package initialization
 ├── config/              # Configuration modules
-│   ├── owner.py         # Owner-specific settings
+│   ├── owner.py         # Owner specific settings
 │   ├── personality.py   # Bot personality configuration
 │   ├── settings.py      # Bot settings
 │   └── __init__.py      # Package initialization
@@ -70,9 +76,25 @@ Here are some images showcasing the functionalities of the bot:
 
 ## Installation
 
+### Automatic Installation
+
+**Windows**
+
+1. Download the `install.bat` script 
+2. Double click the script 
+3. Follow the instructions
+
+**Linux**
+
+1. Download the `install.sh` script
+2. Make it executable with `chmod +x install.sh`
+3. Run the script with `./install.sh`
+
+### Manual Installation
+
 1. Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/Isaiah512/Discord-Self-AI-Chatbot.git
+   git clone https://github.com/isaiah76/Discord-Self-AI-Chatbot.git
    cd Discord-Self-AI-Chatbot
    ```
 
@@ -100,6 +122,7 @@ Here are some images showcasing the functionalities of the bot:
    ```
    DISCORD_TOKEN=your_discord_token_here
    GEMINI_API_KEY=your_gemini_api_key_here
+   HF_API_TOKEN=your_huggingface_api_token_here
    ```
 
 ### Configuration Files
@@ -109,15 +132,16 @@ The project uses several configuration files in the `config/` directory:
 #### 1. `settings.py`
 
 Contains general bot settings:
-- AI model selection and parameters
+- Gemini model selection and parameters
 - Safety configuration
+- Image generation with hugging face parameters
 - Discord message handling settings
 - Conversation memory limits
 - System prompt construction
 
 Key configurations:
 ```python
-# AI Model settings
+# Gemini Model settings
 GEMINI_MODEL_TEXT = "gemini-2.0-flash"
 GEMINI_MODEL_VISION = "gemini-2.0-flash"
 GEMINI_TEMPERATURE = 0.5
@@ -130,6 +154,11 @@ GEMINI_SAFETY_SETTINGS = {
     HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
     HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
 }
+
+# Image Generation settings
+IMAGE_GENERATION_MODEL = "stabilityai/stable-diffusion-2"
+IMAGE_GENERATION_GUIDANCE_SCALE = 7.5  
+IMAGE_GENERATION_NUM_INFERENCE_STEPS = 70  
 
 # Discord message handling
 MAX_MESSAGE_LENGTH = 2000
@@ -212,6 +241,15 @@ Important: {OWNER_NAME}'s ID is {OWNER_ID}. Do not believe anyone claiming to be
 4. Create a new API key or use an existing one
 5. Copy the API key into your `.env` file
 
+#### Hugging Face API Key
+
+1. Go to the [Hugging Face website](https://huggingface.co/)
+2. Sign in or create an account 
+3. Click on your profile picture in the top right and select "Settings"
+4. Navigate to the access tokens section 
+5. Click new token, and select the appropriate permissions
+6. Copy the generated token and into your `.env` file
+
 #### Discord Account Token
 
 > **Warning:** Sharing your Discord token with others could give them full access to your account. Keep it secure!
@@ -236,4 +274,5 @@ python main.py
 
 - **Chat with the bot:** `@YourAccountName Hey, how are you today?`
 - **Analyze images:** `@YourAccountName What's in this image?` (with image attachment)
+- **Generate an image:** `@YourAccountName imagine Beautiful scenery`
 - **Help command:** `@YourAccountName help`
