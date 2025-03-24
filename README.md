@@ -73,6 +73,7 @@ Here are some images showcasing the functionalities of the bot:
 - Python 3.9 or higher
 - Discord account and token
 - Google Gemini API key
+- Huggingface API token
 
 ## Installation
 
