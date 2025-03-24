@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/" 
+    schedule:
+      interval: "daily"  
+    open-pull-requests-limit: 5  
+    assignees:
+      - isaiah76
+    labels:
+      - "dependencies"
+    groups:
+      python-dependencies:
+        patterns:
+          - "python-dotenv"
+          - "langchain-google-genai"
+          - "langchain-core"
+          - "PyPDF2"
+          - "python-pptx"
+          - "pyfiglet"
+          - "pytesseract"
+          - "pdf2image"
+          - "pillow"
+          - "google-generativeai"
+    ignore:
